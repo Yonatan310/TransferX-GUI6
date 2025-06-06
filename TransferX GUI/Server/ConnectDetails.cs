@@ -31,10 +31,10 @@ namespace TransferX_GUI.Server
         public bool CheckUsername(string username)
         {
 
-            string g = $"{username}";
-            ServerConnection.Send(Encoding.UTF8.GetBytes(g.Length.ToString()));
+            byte[] s = Rsa.Encrypt(username);
+            ServerConnection.Send(Encoding.UTF8.GetBytes(s.Length.ToString()));
             Thread.Sleep(200);
-            ServerConnection.Send(Encoding.UTF8.GetBytes(g));
+            ServerConnection.Send(s);
 
 
             byte[] bytes = new byte[100];
@@ -43,7 +43,7 @@ namespace TransferX_GUI.Server
             ServerConnection.Receive(bytes);
 
 
-            if (Encoding.UTF8.GetString(bytes) == "0")
+            if (Rsa.decrypt(bytes) == "0")
             {
                 return false;
             }  
@@ -54,15 +54,23 @@ namespace TransferX_GUI.Server
 
         public bool CheckSerialKey(string serialkey)
         {
-
             ServerConnection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint en = new IPEndPoint(IPAddress.Parse(IpAddress), 50000);
             ServerConnection.Connect(en);
 
-            string g = $"{serialkey}";
-            ServerConnection.Send(Encoding.UTF8.GetBytes(g.Length.ToString()));
+            byte[] publickeybytes = new byte[243];
+
+            ServerConnection.Send(Rsa.getRsaPublicKey());
+            
+            ServerConnection.Receive(publickeybytes);
+            
+            Rsa.SetServerPublicKey(publickeybytes);
+
+            byte[] s = Rsa.Encrypt(serialkey);
+
+            ServerConnection.Send(Encoding.UTF8.GetBytes(s.Length.ToString()));
             Thread.Sleep(200);
-            ServerConnection.Send(Encoding.UTF8.GetBytes(g));
+            ServerConnection.Send(s);
 
 
             byte[] bytes = new byte[100];
@@ -71,7 +79,7 @@ namespace TransferX_GUI.Server
             ServerConnection.Receive(bytes);
 
 
-            if (Encoding.UTF8.GetString(bytes) == "0")
+            if (Rsa.decrypt(bytes) == "0")
             {
                 return false;
             }

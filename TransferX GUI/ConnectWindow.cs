@@ -13,6 +13,8 @@ namespace TransferX_GUI
             InitializeComponent();
             this.Icon = new System.Drawing.Icon("ico.ico");
 
+            Rsa.generate();
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -36,20 +38,22 @@ namespace TransferX_GUI
                 //PasswordBox.Text,
                 //SerialKeyBox.Text,
                 //ProtocolBox.Text
+
                 "127.0.0.1",
                 "22",
-                UsernameBox.Text,
+                "sftpuser",
                 "3107",
-                SerialKeyBox.Text,
+                "c",
                 "SFTP Protocol"
             );
+            /*
+            if (ProtocolBox == null || string.IsNullOrEmpty(ProtocolBox.Text) || IpAddressBox == null || string.IsNullOrEmpty(IpAddressBox.Text) || PortBox == null || string.IsNullOrEmpty(PortBox.Text) || UsernameBox == null || string.IsNullOrEmpty(UsernameBox.Text) || PasswordBox == null || string.IsNullOrEmpty(PasswordBox.Text) || SerialKeyBox == null || string.IsNullOrEmpty(SerialKeyBox.Text))
+            {
 
-            //if (ProtocolBox == null || string.IsNullOrEmpty(ProtocolBox.Text) || IpAddressBox == null || string.IsNullOrEmpty(IpAddressBox.Text) || PortBox == null || string.IsNullOrEmpty(PortBox.Text) || UsernameBox == null || string.IsNullOrEmpty(UsernameBox.Text) || PasswordBox == null || string.IsNullOrEmpty(PasswordBox.Text) || SerialKeyBox == null || string.IsNullOrEmpty(SerialKeyBox.Text))
-            //{
-
-            //    MessageBox.Show("Some Of The Boxes Are Empty Or Null, Check Them Before Connect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+                MessageBox.Show("Some Of The Boxes Are Empty Or Null, Check Them Before Connect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            */
             LogMessage("Checking serial key...");
 
             await Task.Delay(2000);
