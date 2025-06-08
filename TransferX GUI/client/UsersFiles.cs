@@ -141,10 +141,10 @@ namespace TransferX_GUI.client
                         if (dir.IsDirectory)
                         {
                             node.Nodes.Add("...");
-                            TreeNode t = AddSpecificFolderToServerNode(node, transferxclient, $"{FolderPath}/{dir.Name}");
+                            TreeNode secondfolder = AddFolderToServerNode(node, transferxclient, $"{FolderPath}/{dir.Name}");
                             
-                            if (t != null)
-                                node.Nodes.Add(t);
+                            if (secondfolder != null)
+                                node.Nodes.Add(secondfolder);
                         }
 
                         specificNode.Nodes.Add(node);
@@ -160,7 +160,7 @@ namespace TransferX_GUI.client
             treeView.Nodes.Add(specificNode);
         }
 
-        private static TreeNode AddSpecificFolderToServerNode(TreeNode treeView, SftpClient transferxclient, string FolderPath)
+        private static TreeNode AddFolderToServerNode(TreeNode treeView, SftpClient transferxclient, string FolderPath)
         {
             TreeNode node = null;
             if (treeView == null)
@@ -181,10 +181,10 @@ namespace TransferX_GUI.client
 
                         if (dir.IsDirectory)
                         {
-                            TreeNode temp = AddSpecificFolderToServerNode(node, transferxclient, $"{FolderPath}/{dir.Name}");
-                            if (temp != null)
+                            TreeNode otherfolders = AddFolderToServerNode(node, transferxclient, $"{FolderPath}/{dir.Name}");
+                            if (otherfolders != null)
                             {
-                                node.Nodes.Add(temp);
+                                node.Nodes.Add(otherfolders);
                                 
                             }
                         }

@@ -55,11 +55,7 @@ namespace TransferX_GUI
             }
             */
             LogMessage("Checking serial key...");
-
-            await Task.Delay(2000);
-
-
-
+            Thread.Sleep(2000);
             bool isValidSerialKey = connectDetails.CheckSerialKey(SerialKeyBox.Text);
             if (!isValidSerialKey)
             {
@@ -68,19 +64,18 @@ namespace TransferX_GUI
                 return;
             }
             LogMessage("Serial key is valid.");
-            await Task.Delay(500);
+            Thread.Sleep(500);
             LogMessage("Connecting To The Server...");
             LogMessage($"Using Protocol: {connectDetails.GetProtocol()}");
-
             bool UserNameCheck = connectDetails.CheckUsername(UsernameBox.Text);
             if (!UserNameCheck)
             {
 
-                LogMessage($"Thwre Was Problem While connecting you Too The Server");
+                LogMessage($"There Was Problem While connecting you To The Server");
                 return;
             }
 
-            await Task.Delay(500);
+            Thread.Sleep(500);
 
 
 
@@ -89,7 +84,7 @@ namespace TransferX_GUI
             if (isValidUser)
             {
                 LogMessage("User authentication successful!");
-                await Task.Delay(1000);
+                Thread.Sleep(1000);
                 this.Hide();
                 Main main = new Main();
                 main.StartPosition = FormStartPosition.CenterScreen;

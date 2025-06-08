@@ -46,16 +46,36 @@ namespace TransferX_GUI
 
         private void TransferFile_Click(object sender, EventArgs e)
         {
-            string User1FilesTag = User1Files.SelectedNode?.Tag?.ToString() ?? "Select File!";
-            string User2FilesTag = User2Files.SelectedNode?.Tag?.ToString() ?? "Select Folder!";
+            string User1FilesTag = "";
+            string User2FilesTag = "";
+
+            if (User1Files.SelectedNode?.Tag == null)
+                User2FilesTag = "Select Folder!";
+            else
+                User2FilesTag = User1Files.SelectedNode.Tag.ToString();
+            if (User2Files.SelectedNode?.Tag == null)
+                User1FilesTag = "Select File!";
+            else
+                User1FilesTag = User2Files.SelectedNode.Tag.ToString();
+
             TransferUI transferui = new TransferUI(User1FilesTag, User2FilesTag);
             transferui.Show();
         }
 
         private void DownloadFile_Click(object sender, EventArgs e)
         {
-            string User2FilesTag = User1Files.SelectedNode?.Tag?.ToString() ?? "Select Folder!";
-            string User1FilesTag = User2Files.SelectedNode?.Tag?.ToString() ?? "Select File!";
+            string User2FilesTag;
+            string User1FilesTag;
+
+            if (User1Files.SelectedNode?.Tag == null)
+                User2FilesTag = "Select Folder!";
+            else
+                User2FilesTag = User1Files.SelectedNode.Tag.ToString();
+            if (User2Files.SelectedNode?.Tag == null)
+                User1FilesTag = "Select File!";
+            else
+                User1FilesTag = User2Files.SelectedNode.Tag.ToString();
+
             DownloadUI downloadui = new DownloadUI(User2FilesTag, User1FilesTag);
             downloadui.Show();
         }
