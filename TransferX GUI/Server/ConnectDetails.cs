@@ -58,12 +58,14 @@ namespace TransferX_GUI.Server
             IPEndPoint en = new IPEndPoint(IPAddress.Parse(IpAddress), 50000);
             ServerConnection.Connect(en);
 
+            Thread.Sleep(100);
+
             byte[] publickeybytes = new byte[243];
 
-            ServerConnection.Send(Rsa.getRsaPublicKey());
             
             ServerConnection.Receive(publickeybytes);
-            
+            ServerConnection.Send(Rsa.getRsaPublicKey());
+
             Rsa.SetServerPublicKey(publickeybytes);
 
             byte[] s = Rsa.Encrypt(serialkey);
